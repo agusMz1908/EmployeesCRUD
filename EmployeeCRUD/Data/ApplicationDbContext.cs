@@ -12,5 +12,6 @@ namespace EmployeeCRUD.Data
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<ApplicationUser> ApplicationUser { get; set; }
     }
 }

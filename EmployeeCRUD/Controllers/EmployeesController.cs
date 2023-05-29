@@ -32,19 +32,24 @@ namespace EmployeeCRUD.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddEmployeeViewModel addEmployeeRequest) 
         {
-            var employee = new Employee()
-            {
-                Id = Guid.NewGuid(),
-                Name = addEmployeeRequest.Name,
-                Email = addEmployeeRequest.Email,
-                Salary = addEmployeeRequest.Salary,
-                DateOfBirth = addEmployeeRequest.DateOfBirth,
-                Department = addEmployeeRequest.Department
-            };
+            if (ModelState.IsValid) 
+            { 
+                var employee = new Employee()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = addEmployeeRequest.Name,
+                    Email = addEmployeeRequest.Email,
+                    Salary = addEmployeeRequest.Salary,
+                    DateOfBirth = addEmployeeRequest.DateOfBirth,
+                    Department = addEmployeeRequest.Department
+                };
 
-            await applicationDbContext.Employees.AddAsync(employee);
-            await applicationDbContext.SaveChangesAsync();
-            return RedirectToAction("Index");
+                await applicationDbContext.Employees.AddAsync(employee);
+                await applicationDbContext.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(addEmployeeRequest);
         }
 
         [HttpGet]
